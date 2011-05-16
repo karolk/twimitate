@@ -1,4 +1,4 @@
 example:
 from twimitate import imitate
-imitate(karolk)
+imitate('karolk')
 
