@@ -8,7 +8,7 @@ import urlparse
 
 class Twitter(object):
 
-    search_url = 'http://search.twitter.com/search.json'
+    search_url = 'http://api.twitter.com/1.1/search/tweets.json'
 
     def __init__(self, verbose=False):
         self.verbose = verbose
@@ -19,7 +19,7 @@ class Twitter(object):
         results = []
         params = {
             'q': query,
-            'rpp': rpp,
+            'count': rpp,
         }
         if until:
             params['until'] = until.strftime('%Y-%m-%d')
@@ -29,7 +29,8 @@ class Twitter(object):
 
         url = '%s?%s' % (self.search_url, urllib.urlencode(params))
         response = json.loads(urllib.urlopen(url).read())
-        results.extend(response['results'])
+        print response
+        results.extend(response['statuses'])
 
         if len(results) >= max_results:
             return results
